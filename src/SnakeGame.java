@@ -28,7 +28,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     // food
     Tile food;
     Random foodRandomGenerate;
-    ImageIcon foodIcon = new ImageIcon("JAVA.png");
+    ImageIcon foodIcon = new ImageIcon("Professor.jpg");
     Image foodImage = foodIcon.getImage();
 
     // game logic
@@ -177,7 +177,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         // quit
         g.drawString("Quit?", 273, 470);
 
-        //sound.playGameOverSound();
+        sound.playGameOverSound();
     }
 
     @Override

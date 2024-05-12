@@ -9,11 +9,11 @@ public class Sound {
     URL soundURLs[] = new URL[5];
 
     public Sound() {
-        soundURLs[0] = getClass().getResource("/sound/BlueBoyAdventure.wav");
-        soundURLs[1] = getClass().getResource("/sound/Dungeon.wav");
-        soundURLs[2] = getClass().getResource("/sound/FinalBattle.wav");
-        soundURLs[3] = getClass().getResource("/sound/Merchant.wav");
-        soundURLs[4] = getClass().getResource("\\sound\\gameover.wav");
+        soundURLs[0] = getClass().getResource("sound/BlueBoyAdventure.wav");
+        soundURLs[1] = getClass().getResource("sound/Dungeon.wav");
+        soundURLs[2] = getClass().getResource("sound/FinalBattle.wav");
+        soundURLs[3] = getClass().getResource("sound/Merchant.wav");
+        soundURLs[4] = getClass().getResource("sound/gameover.wav");
         
     }
 
