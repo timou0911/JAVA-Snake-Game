@@ -62,6 +62,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         gameLoop = new Timer(snakeSpeed, this);
         gameLoop.start();
+
+        sound.playAndLoopBackgroundMusic();
     }
 
     public void paintComponent(Graphics g) {
@@ -177,6 +179,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         // quit
         g.drawString("Quit?", 273, 470);
 
+        sound.stopBackgroundMusic();
         sound.playGameOverSound();
     }
 
