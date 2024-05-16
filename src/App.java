@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -12,10 +13,10 @@ public class App {
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        frame.setLayout(new GridBagLayout());
         SnakeGame snakeGame = new SnakeGame(boardWidth, boardHeight);
         frame.add(snakeGame);
-        
+
         snakeGame.requestFocus();
         frame.pack();
     }

@@ -3,7 +3,6 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
-
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private class Tile {
         int x;
@@ -28,8 +27,10 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     // food
     Tile food;
     Random foodRandomGenerate;
-    ImageIcon foodIcon = new ImageIcon("Professor.jpg");
+    ImageIcon foodIcon = new ImageIcon("src/JAVA.png");
     Image foodImage = foodIcon.getImage();
+    ImageIcon headIcon = new ImageIcon("src/Snake-head.png");
+    Image headImage = headIcon.getImage();
 
     // game logic
     Timer gameLoop;
@@ -40,9 +41,12 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     // sound
     Sound sound = new Sound();
 
+    // buttons
+    Buttons restartButton, quitButton;
     SnakeGame(int boardWidth, int boardHeight) {
         this.boardWidth = boardWidth;
         this.boardHeight = boardHeight;
+        setLayout(null);
 
         setPreferredSize(new Dimension(this.boardWidth, this.boardHeight));
         setBackground(Color.GRAY);
@@ -62,6 +66,27 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         gameLoop = new Timer(snakeSpeed, this);
         gameLoop.start();
+
+        sound.playAndLoopBackgroundMusic();
+
+        restartButton = new Buttons("Restart",this);
+        restartButton.setVisible(false);
+
+        quitButton = new Buttons("Quit",this);
+        quitButton.setVisible(false);
+    }
+    public void restartGame() {
+        snakeHead = new Tile(5, 5);
+        snakeBody.clear();
+        snakeSpeed = 100;
+        gameOver = false;
+        velocityX = 0;
+        velocityY = 1;
+        placeFood();
+        gameLoop.start();
+        requestFocusInWindow();
+        restartButton.setVisible(false);
+        quitButton.setVisible(false);
     }
 
     public void paintComponent(Graphics g) {
@@ -85,6 +110,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         // snake head
         g.setColor(Color.green);
         g.fill3DRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, true);
+        g.drawImage(headImage, snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, null);
 
         // snake body
         for (int i = 0; i < snakeBody.size(); ++i) {
@@ -96,7 +122,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         g.setFont(new Font("Arial", Font.PLAIN, 16));
         if (gameOver) {
             drawGameOverScreen(g);
-            
+
         } else {
             g.drawString("Score: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
         }
@@ -169,15 +195,11 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         g.setFont(g.getFont().deriveFont(30f));
         g.drawString("Score: " + String.valueOf(snakeBody.size()), 235, 360);
 
-        /// TODO: add retry and quit functions
-        // retry
-        g.setFont(g.getFont().deriveFont(20f));
-        g.drawString("Retry?", 268, 430);
-
-        // quit
-        g.drawString("Quit?", 273, 470);
-
+        sound.stopBackgroundMusic();
         sound.playGameOverSound();
+
+        restartButton.setVisible(true);
+        quitButton.setVisible(true);
     }
 
     @Override
