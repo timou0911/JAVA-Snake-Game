@@ -3,7 +3,6 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
-
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private class Tile {
         int x;
@@ -28,8 +27,10 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     // food
     Tile food;
     Random foodRandomGenerate;
-    ImageIcon foodIcon = new ImageIcon("Professor.jpg");
+    ImageIcon foodIcon = new ImageIcon("src/JAVA.png");
     Image foodImage = foodIcon.getImage();
+    ImageIcon headIcon = new ImageIcon("src/Snake-head.png");
+    Image headImage = headIcon.getImage();
 
     // game logic
     Timer gameLoop;
@@ -40,9 +41,12 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     // sound
     Sound sound = new Sound();
 
+    // buttons
+    Buttons restartButton, quitButton;
     SnakeGame(int boardWidth, int boardHeight) {
         this.boardWidth = boardWidth;
         this.boardHeight = boardHeight;
+        setLayout(null);
 
         setPreferredSize(new Dimension(this.boardWidth, this.boardHeight));
         setBackground(Color.GRAY);
@@ -67,11 +71,10 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         restartButton = new Buttons("Restart",this);
         restartButton.setVisible(false);
-    
+
         quitButton = new Buttons("Quit",this);
         quitButton.setVisible(false);
     }
-    
     public void restartGame() {
         snakeHead = new Tile(5, 5);
         snakeBody.clear();
@@ -107,6 +110,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         // snake head
         g.setColor(Color.green);
         g.fill3DRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, true);
+        g.drawImage(headImage, snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, null);
 
         // snake body
         for (int i = 0; i < snakeBody.size(); ++i) {
@@ -118,7 +122,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         g.setFont(new Font("Arial", Font.PLAIN, 16));
         if (gameOver) {
             drawGameOverScreen(g);
-            
+
         } else {
             g.drawString("Score: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
         }
@@ -193,6 +197,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         sound.stopBackgroundMusic();
         sound.playGameOverSound();
+
         restartButton.setVisible(true);
         quitButton.setVisible(true);
     }
