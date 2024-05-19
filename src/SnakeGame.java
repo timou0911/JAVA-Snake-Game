@@ -64,6 +64,26 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         gameLoop.start();
 
         sound.playAndLoopBackgroundMusic();
+
+        restartButton = new Buttons("Restart",this);
+        restartButton.setVisible(false);
+    
+        quitButton = new Buttons("Quit",this);
+        quitButton.setVisible(false);
+    }
+    
+    public void restartGame() {
+        snakeHead = new Tile(5, 5);
+        snakeBody.clear();
+        snakeSpeed = 100;
+        gameOver = false;
+        velocityX = 0;
+        velocityY = 1;
+        placeFood();
+        gameLoop.start();
+        requestFocusInWindow();
+        restartButton.setVisible(false);
+        quitButton.setVisible(false);
     }
 
     public void paintComponent(Graphics g) {
@@ -171,16 +191,10 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         g.setFont(g.getFont().deriveFont(30f));
         g.drawString("Score: " + String.valueOf(snakeBody.size()), 235, 360);
 
-        /// TODO: add retry and quit functions
-        // retry
-        g.setFont(g.getFont().deriveFont(20f));
-        g.drawString("Retry?", 268, 430);
-
-        // quit
-        g.drawString("Quit?", 273, 470);
-
         sound.stopBackgroundMusic();
         sound.playGameOverSound();
+        restartButton.setVisible(true);
+        quitButton.setVisible(true);
     }
 
     @Override
