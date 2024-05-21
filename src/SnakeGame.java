@@ -351,6 +351,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             snake2velocityY = 0;
         }
 
+
         // bomb mode ? f
 
         //for debug
