@@ -16,6 +16,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     }
 
     // bomb
+    boolean bombMode = false;
     ArrayList<Tile> snakeBomb;
     ArrayList<Tile> snake2Bomb;
 
@@ -40,7 +41,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     // food
     Tile food;
     Random foodRandomGenerate;
-    ImageIcon foodIcon = new ImageIcon("JAVA.png");
+    ImageIcon foodIcon = new ImageIcon("bomb-green.jpg");
     Image foodImage = foodIcon.getImage();
     ImageIcon headIcon = new ImageIcon("Snake-head.png");
     Image headImage = headIcon.getImage();
@@ -239,11 +240,11 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             gameOver = true;
         }
 
-        if ((snakeBody.size() - snake2Body.size()) > 10) {
+        if ((snakeBody.size() - snake2Body.size()) > 7) {
             gameOver = true;
         }
 
-        if ((snake2Body.size() - snakeBody.size()) > 10) {
+        if ((snake2Body.size() - snakeBody.size()) > 7) {
             gameOver = true;
         }
 
@@ -325,6 +326,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             snake2velocityX = -1;
             snake2velocityY = 0;
         }
+
+        // bomb mode ? f
 
         //for debug
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
