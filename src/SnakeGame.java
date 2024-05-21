@@ -3,6 +3,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
+
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private class Tile {
         int x;
@@ -13,6 +14,10 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             this.y = y;
         }
     }
+
+    // bomb
+    ArrayList<Tile> snakeBomb;
+    ArrayList<Tile> snake2Bomb;
 
     //debug
     boolean debug1 = false;
@@ -96,15 +101,25 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     public void restartGame() {
         snakeHead = new Tile(5, 5);
         snakeBody.clear();
-        snakeSpeed = 100;
-        gameOver = false;
         velocityX = 0;
         velocityY = 1;
+
+        snake2Head = new Tile(20, 20);
+        snake2Body.clear();
+        snake2velocityX = 0;
+        snake2velocityY = -1;
+
+        snakeSpeed = 100;
+        debug1 = false;
+        debug2 = false;
+        gameOver = false;
+
         placeFood();
         gameLoop.start();
         requestFocusInWindow();
         restartButton.setVisible(false);
         quitButton.setVisible(false);
+        sound.playAndLoopBackgroundMusic();
     }
 
     public void paintComponent(Graphics g) {
@@ -179,8 +194,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
          if (collision(snakeHead, food)) {
             snakeBody.add(new Tile(food.x, food.y));
             placeFood();
-            if (snakeSpeed > 70) {
-                snakeSpeed -= 3;
+            if (snakeSpeed > 80) {
+                snakeSpeed -= 2;
                 gameLoop.setDelay(snakeSpeed);
             }
         }
@@ -221,6 +236,14 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         //collision with other snake's head
         if (collision(snakeHead, snake2Head)) {
+            gameOver = true;
+        }
+
+        if ((snakeBody.size() - snake2Body.size()) > 10) {
+            gameOver = true;
+        }
+
+        if ((snake2Body.size() - snakeBody.size()) > 10) {
             gameOver = true;
         }
 
