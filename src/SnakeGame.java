@@ -41,10 +41,16 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     // food
     Tile food;
     Random foodRandomGenerate;
-    ImageIcon foodIcon = new ImageIcon("bomb-green.jpg");
+    ImageIcon foodIcon = new ImageIcon("JAVA.png");
     Image foodImage = foodIcon.getImage();
-    ImageIcon headIcon = new ImageIcon("Snake-head.png");
-    Image headImage = headIcon.getImage();
+    ImageIcon headIcon1 = new ImageIcon("Snake-head1.jpg");
+    Image headImage1 = headIcon1.getImage();
+    ImageIcon snakeBodyIcon1= new ImageIcon("snakeBody1.jpg");
+    Image snakeBodyImage1 = snakeBodyIcon1.getImage();
+    ImageIcon headIcon2 = new ImageIcon("Snake-head2.jpg");
+    Image headImage2 = headIcon2.getImage();
+    ImageIcon snakeBodyIcon2= new ImageIcon("snakeBody2.jpg");
+    Image snakeBodyImage2 = snakeBodyIcon2.getImage();
 
     // game logic
     Timer gameLoop;
@@ -144,22 +150,25 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         // snake head
         g.setColor(Color.green);
         g.fill3DRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, true);
-        g.drawImage(headImage, snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, null);
+        g.drawImage(headImage1, snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, null);
 
         // snake body
         for (int i = 0; i < snakeBody.size(); ++i) {
             Tile snakePart = snakeBody.get(i);
             g.fill3DRect(snakePart.x * tileSize, snakePart.y * tileSize, tileSize, tileSize, true);
+            g.drawImage(snakeBodyImage1, snakePart.x * tileSize, snakePart.y * tileSize, tileSize, tileSize, null);
         }
 
         // snake2 head
         g.setColor(Color.ORANGE);
         g.fill3DRect(snake2Head.x * tileSize, snake2Head.y * tileSize, tileSize, tileSize, true);
+        g.drawImage(headImage2, snake2Head.x * tileSize, snake2Head.y * tileSize, tileSize, tileSize, null);
 
         // snake2 body
         for (int i = 0; i < snake2Body.size(); ++i) {
             Tile snake2Part = snake2Body.get(i);
             g.fill3DRect(snake2Part.x * tileSize, snake2Part.y * tileSize, tileSize, tileSize, true);
+            g.drawImage(snakeBodyImage2, snake2Part.x * tileSize, snake2Part.y * tileSize, tileSize, tileSize, null);
         }
 
         // score and fail screen
