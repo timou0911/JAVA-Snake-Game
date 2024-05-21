@@ -14,15 +14,23 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
     }
 
+    //debug
+    boolean debug1 = false;
+    boolean debug2 = false;
+
     // panel
     int boardWidth;
     int boardHeight;
     int tileSize = 25;
 
+    int snakeSpeed;
     // snake
     Tile snakeHead;
     ArrayList<Tile> snakeBody;
-    int snakeSpeed;
+
+    //snake2
+    Tile snake2Head;
+    ArrayList<Tile> snake2Body;
 
     // food
     Tile food;
@@ -36,6 +44,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     Timer gameLoop;
     int velocityX;
     int velocityY;
+    int snake2velocityX;
+    int snake2velocityY;
     boolean gameOver = false;
 
     // sound
@@ -53,9 +63,14 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         addKeyListener(this);
         setFocusable(true);
 
+        //snake
         snakeHead = new Tile(5, 5);
         snakeBody = new ArrayList<Tile>();
         snakeSpeed = 100;
+
+        //snake2
+        snake2Head = new Tile(20, 20);
+        snake2Body = new ArrayList<Tile>();
 
         food = new Tile(10, 10);
         foodRandomGenerate = new Random();
@@ -63,6 +78,9 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         velocityX = 0;
         velocityY = 1;
+
+        snake2velocityX = 0;
+        snake2velocityY = -1;
 
         gameLoop = new Timer(snakeSpeed, this);
         gameLoop.start();
@@ -118,13 +136,24 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             g.fill3DRect(snakePart.x * tileSize, snakePart.y * tileSize, tileSize, tileSize, true);
         }
 
+        // snake2 head
+        g.setColor(Color.ORANGE);
+        g.fill3DRect(snake2Head.x * tileSize, snake2Head.y * tileSize, tileSize, tileSize, true);
+
+        // snake2 body
+        for (int i = 0; i < snake2Body.size(); ++i) {
+            Tile snake2Part = snake2Body.get(i);
+            g.fill3DRect(snake2Part.x * tileSize, snake2Part.y * tileSize, tileSize, tileSize, true);
+        }
+
         // score and fail screen
         g.setFont(new Font("Arial", Font.PLAIN, 16));
         if (gameOver) {
             drawGameOverScreen(g);
 
         } else {
-            g.drawString("Score: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
+            g.drawString("Score1: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
+            g.drawString("Score2: " + String.valueOf(snake2Body.size()), tileSize - 16, 2*tileSize);
         }
     }
 
@@ -138,7 +167,16 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     }
 
     public void move() {
-        if (collision(snakeHead, food)) {
+        if (!debug1) snakeMovement(snakeHead, food, snakeBody, velocityX, velocityY, snake2Head, snake2Body);
+        if (!debug2) snakeMovement(snake2Head, food, snake2Body, snake2velocityX, snake2velocityY, snakeHead, snakeBody);
+
+        
+    }
+
+    public void snakeMovement(Tile snakeHead, Tile food, ArrayList<Tile> snakeBody, int velocityX, int velocityY, Tile snake2Head, ArrayList<Tile> snake2Body) {
+
+         // snake eat food
+         if (collision(snakeHead, food)) {
             snakeBody.add(new Tile(food.x, food.y));
             placeFood();
             if (snakeSpeed > 70) {
@@ -165,12 +203,27 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         snakeHead.y += velocityY;
 
         // game over condition
+        // collision with itself
         for (int i = 0; i < snakeBody.size(); ++i) {
             Tile snakePart = snakeBody.get(i);
             if (collision(snakeHead, snakePart)) {
                 gameOver = true;
             }
         }
+
+        //collision with other snake's body
+        for (int i = 0; i < snake2Body.size(); i++) {
+            Tile snake2Part = snake2Body.get(i);
+            if (collision(snakeHead, snake2Part)) {
+                gameOver = true;
+            }
+        }
+
+        //collision with other snake's head
+        if (collision(snakeHead, snake2Head)) {
+            gameOver = true;
+        }
+
 
         if (snakeHead.x * tileSize < 0 || snakeHead.x * tileSize > boardWidth || snakeHead.y * tileSize < 0
                 || snakeHead.y * tileSize > boardHeight) {
@@ -215,17 +268,50 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_UP && velocityY != 1) {
+            debug1 = false;
             velocityX = 0;
             velocityY = -1;
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN && velocityY != -1) {
+            debug1 = false;
             velocityX = 0;
             velocityY = 1;
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && velocityX != -1) {
+            debug1 = false;
             velocityX = 1;
             velocityY = 0;
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT && velocityX != 1) {
+            debug1 = false;
             velocityX = -1;
             velocityY = 0;
+        }
+        
+        if (e.getKeyCode() == KeyEvent.VK_W && snake2velocityY != 1) {
+            debug2 = false;
+            snake2velocityX = 0;
+            snake2velocityY = -1;
+        } else if (e.getKeyCode() == KeyEvent.VK_S && snake2velocityY != -1) {
+            debug2 = false;
+            snake2velocityX = 0;
+            snake2velocityY = 1;
+        } else if (e.getKeyCode() == KeyEvent.VK_D && snake2velocityX != -1) {
+            debug2 = false;
+            snake2velocityX = 1;
+            snake2velocityY = 0;
+        } else if (e.getKeyCode() == KeyEvent.VK_A && snake2velocityX != 1) {
+            debug2 = false;
+            snake2velocityX = -1;
+            snake2velocityY = 0;
+        }
+
+        //for debug
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            debug1 = true;
+            debug2 = true;
+            velocityX = 0;
+            velocityY = 0;
+            snake2velocityX = 0;
+            snake2velocityY = 0;
+            gameOver = false;
         }
     }
 
