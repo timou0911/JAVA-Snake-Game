@@ -27,9 +27,9 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     // food
     Tile food;
     Random foodRandomGenerate;
-    ImageIcon foodIcon = new ImageIcon("src/JAVA.png");
+    ImageIcon foodIcon = new ImageIcon("JAVA.png");
     Image foodImage = foodIcon.getImage();
-    ImageIcon headIcon = new ImageIcon("src/Snake-head.png");
+    ImageIcon headIcon = new ImageIcon("Snake-head.png");
     Image headImage = headIcon.getImage();
 
     // game logic
