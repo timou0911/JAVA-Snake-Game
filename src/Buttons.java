@@ -19,6 +19,7 @@ public class Buttons extends JButton{
             setBounds(100,430,180,60);
             game.add(this);
             startGameAction(game);
+            game.bombMode = false;
         }
         else if(label.equals("Bomb")){
             setBounds(320,430,180,60);
