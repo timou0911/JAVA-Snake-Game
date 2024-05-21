@@ -9,10 +9,22 @@ public class Buttons extends JButton{
             setBounds(260,400,80,30);
             game.add(this);
             restartAction(game);
-        }else{
+        }
+        else if(label.equals("Quit")){
             setBounds(260,440,80,30);
             game.add(this);
             setQuitAction();
+        }
+        else if(label.equals("Normal")){
+            setBounds(100,430,180,60);
+            game.add(this);
+            startGameAction(game);
+        }
+        else if(label.equals("Bomb")){
+            setBounds(320,430,180,60);
+            game.add(this);
+            startGameAction(game);
+            game.bombMode = true;
         }
     }
     // Method to set the action to quit the JFrame
@@ -33,19 +45,15 @@ public class Buttons extends JButton{
             }
         });
     }
-
-    public void restartgame(SnakeGame g){// couldn't reach Tile
-//        snakeHead = new SnakeGame.Tile(5, 5);
-        g.snakeBody.clear();
-        g.snakeSpeed = 100;
-        g.gameOver = false;
-        g.velocityX = 0;
-        g.velocityY = 1;
-        g.placeFood();
-        g.gameLoop.start();
-        requestFocusInWindow();
-        g.restartButton.setVisible(false);
-        g.quitButton.setVisible(false);
+    public void startGameAction(SnakeGame game) {
+        this.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                game.startGameButton.setVisible(false);
+                game.startBombGameButton.setVisible(false);
+                game.gameStarted=true;
+            }
+        });
     }
 }
 
