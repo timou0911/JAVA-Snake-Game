@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -15,8 +16,9 @@ public class App {
 
         SnakeGame snakeGame = new SnakeGame(boardWidth, boardHeight);
         frame.add(snakeGame);
-        
         snakeGame.requestFocus();
+
+
         frame.pack();
     }
 }
