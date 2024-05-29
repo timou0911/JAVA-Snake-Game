@@ -18,7 +18,6 @@ public class App {
         frame.add(snakeGame);
         snakeGame.requestFocus();
 
-
         frame.pack();
     }
 }
