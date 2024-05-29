@@ -21,9 +21,9 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     boolean bombMode = false;
     ArrayList<Tile> snakeBomb = new ArrayList<Tile>();
     ArrayList<Tile> snake2Bomb = new ArrayList<Tile>();
-    ImageIcon snakeBombIcon = new ImageIcon("src/Images/green-bomb.png");
+    ImageIcon snakeBombIcon = new ImageIcon("Images/green-bomb.png");
     Image snakeBombImage = snakeBombIcon.getImage();
-    ImageIcon snake2BombIcon = new ImageIcon("src/Images/yellow-bomb.png");
+    ImageIcon snake2BombIcon = new ImageIcon("Images/yellow-bomb.png");
     Image snake2BombImage = snake2BombIcon.getImage();
 
     //debug
@@ -43,15 +43,21 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     Tile food;
     Random foodRandomGenerate;
-    ImageIcon foodIcon = new ImageIcon("src/Images/JAVA.png");
+    ImageIcon foodIcon = new ImageIcon("Images/JAVA.png");
     Image foodImage = foodIcon.getImage();
-    ImageIcon headIcon = new ImageIcon("src/Images/Snake-head.png");
+    ImageIcon headIcon = new ImageIcon("Images/Snake-head1.jpg");
     Image headImage = headIcon.getImage();
-    ImageIcon backgroundIcon = new ImageIcon("src/Images/snake-game-background.png");
+    ImageIcon bodyIcon = new ImageIcon("Images/SnakeBody1.jpg");
+    Image bodyImage = bodyIcon.getImage();
+    ImageIcon head2Icon = new ImageIcon("Images/Snake-head2.jpg");
+    Image head2Image = head2Icon.getImage();
+    ImageIcon body2Icon = new ImageIcon("Images/SnakeBody2.jpg");
+    Image body2Image = body2Icon.getImage();
+    ImageIcon backgroundIcon = new ImageIcon("Images/snake-game-background.png");
     Image backgroundImage = backgroundIcon.getImage();
-    ImageIcon greenBombIcon = new ImageIcon("src/Images/green-bomb.png");
+    ImageIcon greenBombIcon = new ImageIcon("Images/green-bomb.png");
     Image greenBombImage = greenBombIcon.getImage();
-    ImageIcon yellowBombIcon = new ImageIcon("src/Images/yellow-bomb.png");
+    ImageIcon yellowBombIcon = new ImageIcon("Images/yellow-bomb.png");
     Image yellowBombImage = yellowBombIcon.getImage();
     // game logic
     Timer gameLoop;
@@ -183,6 +189,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             for (int i = 0; i < snakeBody.size(); ++i) {
                 Tile snakePart = snakeBody.get(i);
                 g.fill3DRect(snakePart.x * tileSize, snakePart.y * tileSize, tileSize, tileSize, true);
+                g.drawImage(bodyImage, snakePart.x * tileSize, snakePart.y * tileSize, tileSize, tileSize, null);
             }
             // snake1 bomb
             for (int i = 0; i < snakeBomb.size(); ++i) {
@@ -193,10 +200,12 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             // snake2 head
             g.setColor(Color.ORANGE);
             g.fill3DRect(snake2Head.x * tileSize, snake2Head.y * tileSize, tileSize, tileSize, true);
+            g.drawImage(head2Image, snake2Head.x * tileSize, snake2Head.y * tileSize, tileSize, tileSize, null);
             // snake2 body
             for (int i = 0; i < snake2Body.size(); ++i) {
                 Tile snake2Part = snake2Body.get(i);
                 g.fill3DRect(snake2Part.x * tileSize, snake2Part.y * tileSize, tileSize, tileSize, true);
+                g.drawImage(body2Image, snake2Part.x * tileSize, snake2Part.y * tileSize, tileSize, tileSize, null);
             }
             // snake2 bomb
             for (int i = 0; i < snake2Bomb.size(); ++i) {
