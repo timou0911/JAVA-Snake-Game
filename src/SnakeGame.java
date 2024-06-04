@@ -410,20 +410,21 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         // button text
         g.setFont(g.getFont().deriveFont(Font.BOLD, 20f));
-        g.setColor(Color.BLACK);
+        g.setColor(Color.WHITE);
         g.drawString("Restart", 270, 420);
 
         g.setFont(g.getFont().deriveFont(Font.BOLD, 20f));
-        g.setColor(Color.BLACK);
+        g.setColor(Color.WHITE);
         g.drawString("Quit", 285, 470);
 
         // score
         g.setFont(g.getFont().deriveFont(30f));
         if(result==1){
-            g.drawString("Score: " + String.valueOf(snakeBody.size()), 240, 360);
+            g.drawString("Winner: Green with Score: " + String.valueOf(snakeBody.size()), 100, 360);
         } else if(result==2){
-            g.drawString("Score: " + String.valueOf(snake2Body.size()), 240, 360);
-        } else{
+            g.drawString("Winner: Yellow with Score: " + String.valueOf(snake2Body.size()), 100, 360);
+        } else {
+            g.setColor(Color.WHITE);
             g.drawString("Tie!", 275, 360);
         }
 
